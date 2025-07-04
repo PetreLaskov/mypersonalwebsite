@@ -1,0 +1,17 @@
+---
+# Site metadata
+site-title: "Your Name"
+author: "Your Name"
+year: "2025"
+description: "Personal website featuring contemplative writing, art, and meditation"
+url: "https://yoursite.com"
+
+# Build settings
+lang: "en"
+date-format: "%B %e, %Y"
+
+# Optional settings
+# math: true  # Enable MathJax
+# toc: true   # Enable table of contents
+# css: 
+#   - "/static/css/custom.css"

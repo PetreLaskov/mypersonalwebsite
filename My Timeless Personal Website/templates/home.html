@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>$if(title)$$title$ - $endif$$if(site-title)$$site-title$$else$Your Name$endif$</title>
+    $if(description)$<meta name="description" content="$description$">$endif$
+    <meta name="author" content="$if(author)$$author$$else$Your Name$endif$">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="$if(site-title)$$site-title$$else$Your Name$endif$">
+    $if(description)$<meta property="og:description" content="$description$">$endif$
+    $if(url)$<meta property="og:url" content="$url$">$endif$
+    $if(og-image)$<meta property="og:image" content="$og-image$">$endif$
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="stylesheet" href="/static/css/home.css">
+    $if(css)$$for(css)$<link rel="stylesheet" href="$css$">$endfor$$endif$
+    
+    <!-- RSS Feed -->
+    <link rel="alternate" type="application/rss+xml" title="$if(site-title)$$site-title$$else$Your Name$endif$ - RSS Feed" href="/feed.xml">
+    
+    <!-- Dark mode preference -->
+    <script>
+        if (localStorage.getItem('theme') === 'dark' || 
+            (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/" class="site-title">$if(site-title)$$site-title$$else$Your Name$endif$</a>
+            <ul>
+                <li><a href="/" class="active">Home</a></li>
+                <li><a href="/essays">Essays</a></li>
+                <li><a href="/art">Art</a></li>
+                <li><a href="/about">About</a></li>
+            </ul>
+            <button id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+        </nav>
+    </header>
+
+    <main class="home-container">
+        <!-- Hero section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">$if(hero-title)$$hero-title$$else$$if(site-title)$$site-title$$else$Your Name$endif$$endif$</h1>
+                $if(hero-subtitle)$<p class="hero-subtitle">$hero-subtitle$</p>$endif$
+                $if(hero-description)$<p class="hero-description">$hero-description$</p>$endif$
+            </div>
+        </section>
+
+        <!-- Now section -->
+        $if(now)$
+        <section class="now-section">
+            <div class="section-header">
+                <h2>Now</h2>
+                <p class="section-subtitle">What I'm currently working on and thinking about</p>
+            </div>
+            <div class="now-content">
+                $if(now.reading)$
+                <div class="now-item">
+                    <h3>📚 Reading</h3>
+                    <p>$now.reading$</p>
+                </div>
+                $endif$
+                
+                $if(now.working)$
+                <div class="now-item">
+                    <h3>🔨 Working On</h3>
+                    <p>$now.working$</p>
+                </div>
+                $endif$
+                
+                $if(now.thinking)$
+                <div class="now-item">
+                    <h3>🤔 Thinking About</h3>
+                    <p>$now.thinking$</p>
+                </div>
+                $endif$
+                
+                $if(now.learning)$
+                <div class="now-item">
+                    <h3>🎓 Learning</h3>
+                    <p>$now.learning$</p>
+                </div>
+                $endif$
+                
+                $if(now.custom)$
+                $for(now.custom)$
+                <div class="now-item">
+                    <h3>$now.custom.icon$ $now.custom.title$</h3>
+                    <p>$now.custom.content$</p>
+                </div>
+                $endfor$
+                $endif$
+            </div>
+            $if(now.updated)$
+            <p class="now-updated">Last updated: $now.updated$</p>
+            $endif$
+        </section>
+        $endif$
+
+        <!-- Featured content -->
+        <section class="featured-content">
+            <div class="section-header">
+                <h2>Recent Work</h2>
+                <p class="section-subtitle">Latest essays, artworks, and explorations</p>
+            </div>
+            
+            <div class="featured-grid">
+                $if(featured-essay)$
+                <article class="featured-item featured-essay">
+                    <div class="item-header">
+                        <span class="item-type">Essay</span>
+                        $if(featured-essay.date)$<time datetime="$featured-essay.date$">$featured-essay.date$</time>$endif$
+                    </div>
+                    <h3><a href="$featured-essay.url$">$featured-essay.title$</a></h3>
+                    $if(featured-essay.subtitle)$<p class="item-subtitle">$featured-essay.subtitle$</p>$endif$
+                    $if(featured-essay.description)$<p class="item-description">$featured-essay.description$</p>$endif$
+                    $if(featured-essay.reading-time)$<p class="reading-time">$featured-essay.reading-time$ min read</p>$endif$
+                </article>
+                $endif$
+
+                $if(featured-artwork)$
+                <article class="featured-item featured-artwork">
+                    <div class="item-header">
+                        <span class="item-type">Artwork</span>
+                        $if(featured-artwork.date)$<time datetime="$featured-artwork.date$">$featured-artwork.date$</time>$endif$
+                    </div>
+                    <h3><a href="$featured-artwork.url$">$featured-artwork.title$</a></h3>
+                    $if(featured-artwork.image)$
+                    <div class="artwork-preview">
+                        <a href="$featured-artwork.url$">
+                            <img src="$featured-artwork.image$" alt="$featured-artwork.title$" loading="lazy">
+                        </a>
+                    </div>
+                    $endif$
+                    $if(featured-artwork.medium)$<p class="artwork-medium">$featured-artwork.medium$</p>$endif$
+                    $if(featured-artwork.description)$<p class="item-description">$featured-artwork.description$</p>$endif$
+                </article>
+                $endif$
+
+                $if(featured-other)$
+                <article class="featured-item featured-other">
+                    <div class="item-header">
+                        <span class="item-type">$featured-other.type$</span>
+                        $if(featured-other.date)$<time datetime="$featured-other.date$">$featured-other.date$</time>$endif$
+                    </div>
+                    <h3><a href="$featured-other.url$">$featured-other.title$</a></h3>
+                    $if(featured-other.subtitle)$<p class="item-subtitle">$featured-other.subtitle$</p>$endif$
+                    $if(featured-other.description)$<p class="item-description">$featured-other.description$</p>$endif$
+                </article>
+                $endif$
+            </div>
+        </section>
+
+        <!-- Recent posts -->
+        <section class="recent-posts">
+            <div class="section-header">
+                <h2>All Recent Posts</h2>
+                <p class="section-subtitle">Essays, artworks, and updates in chronological order</p>
+            </div>
+            
+            <div class="posts-list">
+                $if(recent-posts)$
+                $for(recent-posts)$
+                <article class="post-item">
+                    <div class="post-meta">
+                        <span class="post-type">$recent-posts.type$</span>
+                        $if(recent-posts.date)$<time datetime="$recent-posts.date$">$recent-posts.date$</time>$endif$
+                    </div>
+                    <h3><a href="$recent-posts.url$">$recent-posts.title$</a></h3>
+                    $if(recent-posts.description)$<p>$recent-posts.description$</p>$endif$
+                    $if(recent-posts.tags)$
+                    <div class="post-tags">
+                        $for(recent-posts.tags)$<span class="tag">$recent-posts.tags$</span>$endfor$
+                    </div>
+                    $endif$
+                </article>
+                $endfor$
+                $endif$
+            </div>
+            
+            <div class="posts-navigation">
+                <a href="/essays" class="nav-link">All Essays →</a>
+                <a href="/art" class="nav-link">Art Gallery →</a>
+                <a href="/feed.xml" class="nav-link">RSS Feed →</a>
+            </div>
+        </section>
+
+        <!-- About preview -->
+        <section class="about-preview">
+            <div class="section-header">
+                <h2>About This Site</h2>
+            </div>
+            <div class="about-content">
+                $if(about-preview)$
+                <p>$about-preview$</p>
+                $else$
+                <p>This is a space for contemplative writing, visual art, and thoughtful exploration. Following principles of slow, intentional content creation, everything here is designed to last and to invite genuine reflection.</p>
+                $endif$
+                
+                <div class="site-principles">
+                    $if(principles)$
+                    $for(principles)$
+                    <div class="principle">
+                        <h4>$principles.title$</h4>
+                        <p>$principles.description$</p>
+                    </div>
+                    $endfor$
+                    $else$
+                    <div class="principle">
+                        <h4>Timeless Over Timely</h4>
+                        <p>Content designed to remain relevant and valuable over years, not just days.</p>
+                    </div>
+                    <div class="principle">
+                        <h4>Depth Over Breadth</h4>
+                        <p>Thorough exploration of fewer topics rather than surface coverage of many.</p>
+                    </div>
+                    <div class="principle">
+                        <h4>Quality Over Quantity</h4>
+                        <p>Careful craft and thoughtful revision rather than rapid publication.</p>
+                    </div>
+                    $endif$
+                </div>
+                
+                <p class="about-link"><a href="/about">Learn more about the philosophy behind this site →</a></p>
+            </div>
+        </section>
+
+        <!-- Newsletter/Contact -->
+        $if(newsletter)$
+        <section class="newsletter-section">
+            <div class="section-header">
+                <h2>Stay Connected</h2>
+                <p class="section-subtitle">Occasional updates on new essays and artworks</p>
+            </div>
+            <div class="newsletter-content">
+                <p>$if(newsletter.description)$$newsletter.description$$else$Subscribe for thoughtful updates delivered directly to your inbox. No spam, just substantial content when it's ready.$endif$</p>
+                
+                <form class="newsletter-form" action="$if(newsletter.action)$$newsletter.action$$else$/subscribe$endif$" method="post">
+                    <div class="form-group">
+                        <label for="email" class="visually-hidden">Email address</label>
+                        <input type="email" name="email" id="email" placeholder="your@email.com" required>
+                        <button type="submit">Subscribe</button>
+                    </div>
+                </form>
+                
+                <p class="newsletter-note">
+                    Prefer RSS? <a href="/feed.xml">Subscribe to the feed</a> instead.
+                    $if(newsletter.privacy)$ Read our <a href="$newsletter.privacy$">privacy policy</a>.$endif$
+                </p>
+            </div>
+        </section>
+        $endif$
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-main">
+                <div class="footer-about">
+                    <h4>$if(site-title)$$site-title$$else$Your Name$endif$</h4>
+                    <p>$if(footer-description)$$footer-description$$else$Contemplative writing, visual art, and thoughtful exploration.$endif$</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Navigate</h4>
+                    <ul>
+                        <li><a href="/essays">Essays</a></li>
+                        <li><a href="/art">Art</a></li>
+                        <li><a href="/about">About</a></li>
+                        <li><a href="/feed.xml">RSS</a></li>
+                    </ul>
+                </div>
+                <div class="footer-meta">
+                    <h4>Meta</h4>
+                    <ul>
+                        <li><a href="/sitemap.xml">Sitemap</a></li>
+                        $if(source-code)$<li><a href="$source-code$">Source Code</a></li>$endif$
+                        $if(contact-email)$<li><a href="mailto:$contact-email$">Contact</a></li>$endif$
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; $if(year)$$year$$else$2025$endif$ $if(author)$$author$$else$Your Name$endif$. $if(license)$$license$$else$All rights reserved.$endif$</p>
+                <p class="footer-tech">Built with <a href="https://pandoc.org">Pandoc</a> and intentional simplicity.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/static/js/main.js"></script>
+    <script src="/static/js/home.js"></script>
+</body>
+</html>
