@@ -1,0 +1,78 @@
+---
+layout: default
+---
+
+<link rel="stylesheet" href="{{ '/static/css/artwork.css' | relative_url }}">
+
+<article class="artwork">
+    <header class="artwork-header">
+        <h1 class="artwork-title">{{ page.title }}</h1>
+        {% if page.subtitle %}
+            <p class="artwork-subtitle">{{ page.subtitle }}</p>
+        {% endif %}
+        
+        <div class="artwork-meta">
+            <time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: '%B %d, %Y' }}</time>
+            {% if page.medium %}
+                <span class="medium">{{ page.medium }}</span>
+            {% endif %}
+            {% if page.dimensions %}
+                <span class="dimensions">{{ page.dimensions }}</span>
+            {% endif %}
+            {% if page.location %}
+                <span class="location">{{ page.location }}</span>
+            {% endif %}
+        </div>
+        
+        {% if page.tags %}
+            <div class="artwork-tags">
+                {% for tag in page.tags %}
+                    <span class="tag">{{ tag }}</span>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </header>
+    
+    {% if page.image %}
+        <div class="artwork-image">
+            <img src="{{ page.image | relative_url }}" alt="{{ page.title }}" class="main-image">
+        </div>
+    {% endif %}
+    
+    <div class="artwork-content">
+        {{ content }}
+    </div>
+    
+    {% if page.variations %}
+        <section class="artwork-variations">
+            <h2>Variations</h2>
+            <div class="variations-grid">
+                {% for variation in page.variations %}
+                    <div class="variation-item">
+                        <h3>{{ variation.title }}</h3>
+                        <img src="{{ variation.image | relative_url }}" alt="{{ variation.title }}">
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+    {% endif %}
+    
+    {% if page.process %}
+        <section class="artwork-process">
+            <h2>Process</h2>
+            <div class="process-steps">
+                {% for step in page.process %}
+                    <div class="process-step">
+                        <h3>Step {{ step.step }}</h3>
+                        {% if step.image %}
+                            <img src="{{ step.image | relative_url }}" alt="Step {{ step.step }}">
+                        {% endif %}
+                        <p>{{ step.description }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+    {% endif %}
+</article>
+
+<script src="{{ '/static/js/artwork.js' | relative_url }}"></script>

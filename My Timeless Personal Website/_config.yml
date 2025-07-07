@@ -1,0 +1,147 @@
+# Site settings
+title: "Petre Laskov"
+author: "Petre Laskov"
+email: "laskov.petre@gmail.com"
+description: "Personal website featuring writing, generated art, and resources I find important"
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "https://yoursite.com" # the base hostname & protocol for your site
+twitter_username: "urgentwonder"
+github_username: "yourusername"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+permalink: pretty
+timezone: America/Los_Angeles
+
+# Jekyll 3 and GitHub Pages
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# Collections
+collections:
+  essays:
+    output: true
+    permalink: /essays/:name/
+  art:
+    output: true
+    permalink: /art/:name/
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+  - scope:
+      path: ""
+      type: "essays"
+    values:
+      layout: "essay"
+  - scope:
+      path: ""
+      type: "art"
+    values:
+      layout: "artwork"
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "page"
+
+# Prose.io configuration
+prose:
+  rooturl: ""
+  siteurl: "https://yoursite.com"
+  media: "static/images"
+  metadata:
+    _essays:
+      - name: "title"
+        field:
+          element: "text"
+          label: "Title"
+          placeholder: "Enter title"
+      - name: "subtitle"
+        field:
+          element: "text"
+          label: "Subtitle"
+          placeholder: "Enter subtitle"
+      - name: "description"
+        field:
+          element: "textarea"
+          label: "Description"
+          placeholder: "Brief description"
+      - name: "author"
+        field:
+          element: "text"
+          label: "Author"
+          value: "Petre Laskov"
+      - name: "date"
+        field:
+          element: "text"
+          label: "Date"
+          value: CURRENT_DATETIME
+      - name: "tags"
+        field:
+          element: "multiselect"
+          label: "Tags"
+          options:
+            - name: "Technology"
+              value: "technology"
+            - name: "Philosophy"
+              value: "philosophy"
+            - name: "Art"
+              value: "art"
+            - name: "Writing"
+              value: "writing"
+            - name: "Meditation"
+              value: "meditation"
+      - name: "layout"
+        field:
+          element: "hidden"
+          value: "essay"
+    _art:
+      - name: "title"
+        field:
+          element: "text"
+          label: "Title"
+          placeholder: "Enter artwork title"
+      - name: "medium"
+        field:
+          element: "text"
+          label: "Medium"
+          placeholder: "e.g., Digital Art, Photography"
+      - name: "date"
+        field:
+          element: "text"
+          label: "Date"
+          value: CURRENT_DATETIME
+      - name: "image"
+        field:
+          element: "text"
+          label: "Main Image Path"
+          placeholder: "/static/images/artworks/filename.jpg"
+      - name: "layout"
+        field:
+          element: "hidden"
+          value: "artwork"
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - build.sh
+  - src/
+  - templates/
+  - CLAUDE.md
+  - DEPLOYMENT.md
+  - GETTING_STARTED.md
+  - MAINTENANCE.md

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
+    
+    {% seo %}
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="{{ '/static/css/main.css' | relative_url }}">
+    {% if page.css %}
+        {% for css_file in page.css %}
+        <link rel="stylesheet" href="{{ css_file | relative_url }}">
+        {% endfor %}
+    {% endif %}
+    
+    <!-- Dark mode preference -->
+    <script>
+        if (localStorage.getItem('theme') === 'dark' || 
+            (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        }
+    </script>
+    
+    {% if page.math %}
+    <!-- MathJax -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    {% endif %}
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="{{ '/' | relative_url }}" class="site-title">{{ site.title }}</a>
+            <ul>
+                <li><a href="{{ '/' | relative_url }}">Home</a></li>
+                <li><a href="{{ '/essays' | relative_url }}">Essays</a></li>
+                <li><a href="{{ '/art' | relative_url }}">Art</a></li>
+                <li><a href="{{ '/about' | relative_url }}">About</a></li>
+            </ul>
+            <button id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+        </nav>
+    </header>
+
+    <main>
+        {{ content }}
+    </main>
+
+    <footer>
+        <p>&copy; {{ site.time | date: '%Y' }} {{ site.author }}</p>
+        <p><a href="{{ '/feed.xml' | relative_url }}">RSS</a> · <a href="{{ '/sitemap.xml' | relative_url }}">Sitemap</a></p>
+    </footer>
+
+    <script src="{{ '/static/js/main.js' | relative_url }}"></script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+---
+layout: default
+---
+
+<link rel="stylesheet" href="{{ '/static/css/home.css' | relative_url }}">
+
+<div class="home-container">
+    <!-- Hero section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">{{ page.hero-title | default: "Contemplative Writing & Visual Art" }}</h1>
+            <p class="hero-subtitle">{{ page.hero-subtitle | default: "A space for deep thinking and meaningful creation" }}</p>
+            <p class="hero-description">{{ page.hero-description | default: "Following principles of slow, intentional content creation, everything here is designed to last and to invite genuine reflection." }}</p>
+        </div>
+    </section>
+
+    <!-- Now section -->
+    {% if page.now %}
+    <section class="now-section">
+        <div class="section-header">
+            <h2>Now</h2>
+            <p class="section-subtitle">What I'm currently working on and thinking about</p>
+        </div>
+        <div class="now-content">
+            {% if page.now.reading %}
+            <div class="now-item">
+                <h3>📚 Reading</h3>
+                <p>{{ page.now.reading }}</p>
+            </div>
+            {% endif %}
+            
+            {% if page.now.working %}
+            <div class="now-item">
+                <h3>🔨 Working On</h3>
+                <p>{{ page.now.working }}</p>
+            </div>
+            {% endif %}
+            
+            {% if page.now.thinking %}
+            <div class="now-item">
+                <h3>🤔 Thinking About</h3>
+                <p>{{ page.now.thinking }}</p>
+            </div>
+            {% endif %}
+            
+            {% if page.now.learning %}
+            <div class="now-item">
+                <h3>🎓 Learning</h3>
+                <p>{{ page.now.learning }}</p>
+            </div>
+            {% endif %}
+        </div>
+        {% if page.now.updated %}
+        <p class="now-updated">Last updated: {{ page.now.updated }}</p>
+        {% endif %}
+    </section>
+    {% endif %}
+    
+    <!-- Featured content -->
+    <section class="featured-content">
+        <div class="section-header">
+            <h2>Recent Work</h2>
+            <p class="section-subtitle">Latest essays, artworks, and explorations</p>
+        </div>
+        
+        <div class="featured-grid">
+            {% if page.featured-essay %}
+            <article class="featured-item featured-essay">
+                <div class="item-header">
+                    <span class="item-type">Essay</span>
+                    <time datetime="{{ page.featured-essay.date }}">{{ page.featured-essay.date }}</time>
+                </div>
+                <h3><a href="{{ page.featured-essay.url }}">{{ page.featured-essay.title }}</a></h3>
+                <p class="item-subtitle">{{ page.featured-essay.subtitle }}</p>
+                <p class="item-description">{{ page.featured-essay.description }}</p>
+                {% if page.featured-essay.reading-time %}
+                <p class="reading-time">{{ page.featured-essay.reading-time }} min read</p>
+                {% endif %}
+            </article>
+            {% endif %}
+            
+            {% if page.featured-artwork %}
+            <article class="featured-item featured-artwork">
+                <div class="item-header">
+                    <span class="item-type">Artwork</span>
+                    <time datetime="{{ page.featured-artwork.date }}">{{ page.featured-artwork.date }}</time>
+                </div>
+                <h3><a href="{{ page.featured-artwork.url }}">{{ page.featured-artwork.title }}</a></h3>
+                {% if page.featured-artwork.image %}
+                <div class="artwork-preview">
+                    <a href="{{ page.featured-artwork.url }}">
+                        <img src="{{ page.featured-artwork.image | relative_url }}" alt="{{ page.featured-artwork.title }}" loading="lazy">
+                    </a>
+                </div>
+                {% endif %}
+                <p class="artwork-medium">{{ page.featured-artwork.medium }}</p>
+                <p class="item-description">{{ page.featured-artwork.description }}</p>
+            </article>
+            {% endif %}
+        </div>
+    </section>
+
+    <!-- Recent posts -->
+    <section class="recent-posts">
+        <div class="section-header">
+            <h2>All Recent Posts</h2>
+            <p class="section-subtitle">Essays, artworks, and updates in chronological order</p>
+        </div>
+        
+        <div class="posts-list">
+            {% assign all_posts = site.essays | concat: site.art | sort: 'date' | reverse %}
+            {% for post in all_posts limit: 5 %}
+            <article class="post-item">
+                <div class="post-meta">
+                    <span class="post-type">{% if post.collection == 'essays' %}Essay{% else %}Artwork{% endif %}</span>
+                    <time datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: '%Y-%m-%d' }}</time>
+                </div>
+                <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+                <p>{{ post.description | default: post.excerpt | strip_html | truncate: 150 }}</p>
+                {% if post.tags %}
+                <div class="post-tags">
+                    {% for tag in post.tags %}
+                    <span class="tag">{{ tag }}</span>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </article>
+            {% endfor %}
+        </div>
+        
+        <div class="posts-navigation">
+            <a href="{{ '/essays' | relative_url }}" class="nav-link">All Essays →</a>
+            <a href="{{ '/art' | relative_url }}" class="nav-link">Art Gallery →</a>
+            <a href="{{ '/feed.xml' | relative_url }}" class="nav-link">RSS Feed →</a>
+        </div>
+    </section>
+
+    <!-- About preview -->
+    {% if page.about-preview %}
+    <section class="about-preview">
+        <div class="section-header">
+            <h2>About This Site</h2>
+        </div>
+        <div class="about-content">
+            <p>{{ page.about-preview }}</p>
+            <p class="about-link"><a href="{{ '/about' | relative_url }}">Learn more about the philosophy behind this site →</a></p>
+        </div>
+    </section>
+    {% endif %}
+</div>
+
+<script src="{{ '/static/js/home.js' | relative_url }}"></script>
